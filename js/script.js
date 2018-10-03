@@ -79,6 +79,12 @@ function selectTab(tabId) {
  * toggle (show/hide) the emojis menu
  */
 function toggleEmojis() {
+    var emojis = require('emojis-list');
+    console.log(emojis[0]);
+    for(i in emojis){
+        $('#emojis').append(emojis[i]);
+    }
+
     $('#emojis').toggle(); // #toggle
 }
 
@@ -106,8 +112,13 @@ function sendMessage() {
     //var message = new Message("Hello chatter");
 
     // #8 let's now use the real message #input
+
+    if ($('#message').val()=='') {
+        
+    } else {
     var message = new Message($('#message').val());
     console.log("New message:", message);
+
 
     // #8 convenient message append with jQuery:
     $('#messages').append(createMessageElement(message));
@@ -118,6 +129,13 @@ function sendMessage() {
 
     // #8 clear the message input
     $('#message').val('');
+
+    
+   currentChannel.messages.push(message);
+   currentChannel.messageCount +=1;
+
+    //console.log(yummy.messages[0])
+    }
 }
 
 /**
@@ -140,21 +158,33 @@ function createMessageElement(messageObject) {
         messageObject.createdOn.toLocaleString() +
         '<em>' + expiresIn+ ' min. left</em></h3>' +
         '<p>' + messageObject.text + '</p>' +
-        '<button>+5 min.</button>' +
+        '<button class="accent" >+5 min.</button>' +
         '</div>';
 }
 
 
-function listChannels() {
+
+
+
+function listChannels(button) {
     // #8 channel onload
     //$('#channels ul').append("<li>New Channel</li>")
+    $('#channels ul').empty();
 
-    // #8 five new channels
-    $('#channels ul').append(createChannelElement(yummy));
-    $('#channels ul').append(createChannelElement(sevencontinents));
-    $('#channels ul').append(createChannelElement(killerapp));
-    $('#channels ul').append(createChannelElement(firstpersononmars));
-    $('#channels ul').append(createChannelElement(octoberfest));
+    if(button=='#tab-new'){
+            channels.sort(compareNew);}
+    else if(button=='#tab-trending'){
+            channels.sort(compareTrendig);}
+    else if(button=='#tab-favorites'){
+            channels.sort(compareFavorit);}
+    else{
+        channels.sort(compareNew);}
+
+
+
+for (i = 0; i < channels.length; i++) {
+    $('#channels ul').append(createChannelElement(channels[i]));
+}
 }
 
 /**
@@ -193,3 +223,75 @@ function createChannelElement(channelObject) {
     // return the complete channel
     return channel;
 }
+
+
+function compareTrendig(a,b){ //CompareFunctionToSortInDescendingOrder
+    var MessageNumberA =a.messageCount;
+    var MessageNumberB =b.messageCount;
+return MessageNumberB-MessageNumberA;
+}
+
+function compareNew(a,b){ //CompareFunctionToSortInAscendingOrder
+    var CreatedOnA =a.createdOn.getTime();
+    var CreatedOnB =b.createdOn.getTime();
+    return CreatedOnB-CreatedOnA;
+}
+
+function compareFavorit(a,b){
+var    BoolA =a.starred;
+var    BoolB =b.starred;
+    return BoolB-BoolA;
+}
+
+function showCreateNewChannel(){
+    $('#messages').hide();
+    $('#channel-name').hide();
+    $('#channel-location').hide();
+    $('#bar-star').hide();
+    $('#sendButton').hide();
+    $('#abort').show();
+    $('#newChannel').show();
+    $('#createButton').show();
+}
+
+function abortNewChannel(){
+    $('#messages').show();
+    $('#channel-name').show();
+    $('#channel-location').show();
+    $('#bar-star').show();
+    $('#sendButton').show();
+    $('#abort').hide();
+    $('#newChannel').hide();
+    $('#createButton').hide(); 
+}
+
+function createNewChannel(){
+    var input=$('#newChannel').val();
+    var hash=input.charAt(0);
+    var mess=$('#message').val();
+
+ if(input!='' && hash=='#' &&  mess!='')
+ {
+    var newCH = new Channel(input,mess);
+ 
+ channels.push(newCH);
+ abortNewChannel();
+ currentChannel=newCH;
+ listChannels();
+ }
+
+}
+
+function Channel(input,mess) {
+    // copy my location
+    this.name= input;
+    this.createdOn= new Date();
+    this.createdBy= currentLocation;
+    this.starred= false;
+    this.expiresIn= 60;
+    this.messageCount= 1;
+   /* this.messages=[];
+    this.messages[0]= mess;*/
+    sendMessage();
+}
+

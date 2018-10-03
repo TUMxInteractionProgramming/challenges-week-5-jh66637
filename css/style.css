@@ -17,6 +17,8 @@
     padding: 0;
 }
 
+
+
 body {
     background-color: #F5F5F5;
 }
@@ -83,7 +85,7 @@ h1 a {
     color: white;
 }
 
-h1 i {
+#bar-star {
     /* #7 #icns #str  */
     position:absolute;
     right: 16px;
@@ -161,9 +163,7 @@ li.selected {
 }
 
 #tab-bar button, #chat-bar button {
-    background-color: white;
-    border: none;
-    font-size: 13px;
+    border-radius: 0%;
     width: 33%;
     height: 72px;
     padding: 16px;
@@ -178,20 +178,19 @@ li.selected {
 }
 
 #tab-bar button i {
-    /* #7 #icns #tab select i instead of img and adjust font size */
+
     display: block;
     font-size: 24px;
     margin: 0 auto 4px auto;
 }
 
-/* CHAT BAR */
+
 
 #chat-bar button {
-    /* override button styles. We set the chat bar to appear like a tab-bar above. This overrides the tab bar's button scaling */
+
     width: auto;
     flex-grow: 0;
 
-    /* #7 #icns #smile adjust fa size */
     font-size: 24px;
 }
 
@@ -199,7 +198,7 @@ li.selected {
     /* emoji menu */
     /* colors and borders */
     background-color:white;
-    border: 1px solid black;
+    border: none;
 
     /* size & alignment */
     position: absolute;
@@ -237,6 +236,9 @@ li.selected {
     margin-bottom: 8px;
     margin-left: 2.5%;
     position: relative;
+    box-shadow:  0px 1px 5px 0px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    0px 3px 1px -2px rgba(0, 0, 0, 0.12);
 }
 
 .message h3 {
@@ -272,10 +274,6 @@ li.selected {
 
 .message button {
     /* +5 min. button*/
-    background-color: #CDDC39;
-    color: black;
-    text-transform: uppercase;
-
     /* right/bottom alignment of button */
     position: absolute;
     right: 8px;
@@ -283,5 +281,95 @@ li.selected {
 }
 
 .message.own {
-    margin-left: 17.5%;
+  /* margin-left: 17.5%;*/
+   margin-left: calc(20% - 20px);
+}
+
+button{
+    padding: 0px 16px;
+    margin: 8px;
+    background-color: white;
+    border: none;
+    color:black;
+    text-transform: capitalize;
+    border-radius: 8px;
+    height:36px;
+    min-width: 64px;
+    font-size: 15px;
+    }
+
+.primary{
+    background-color: #3F51B5;
+    color: white;
+}
+
+.accent{
+background-color: #CDDC39;
+color: black;
+}
+
+
+/*THANKS TO
+Scott Rota
+https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-material-design-elevations*/
+.shadow-2dp {
+    box-shadow:  0px 1px 5px 0px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    0px 3px 1px -2px rgba(0, 0, 0, 0.12); }
+
+.shadow-24dp {
+        box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2),
+        0px 24px 38px 3px rgba(0, 0, 0, 0.14),
+        0px 9px 46px 8px rgba(0, 0, 0, 0.12); }
+
+.fabut{
+display:block;
+height: 56px;
+width: 56px;
+line-height:56px;
+border-radius: 28px;
+font-size:24px;
+border: none;
+text-align: center;
+text-decoration: none;
+color:black;
+font-weight: bold;
+background-color: #CDDC39
+
+
+
+}
+
+#plusbutton{
+position: absolute;
+bottom: 116px; /*72+16+56/2*/
+right: 44px; /*16+56/2*/
+z-index: 1;
+}
+
+#abort{
+    display: none;
+    background-color: #3F51B5;
+    position: absolute;
+    right: 0%; 
+    top: 4px; /*64px/2-56px/2*/
+    line-height: 100%;
+    text-transform: uppercase;
+    font-size: 14px;
+    border-radius: 0px;
+    width:10%;
+}
+
+#newChannel{
+display: none;
+width: 85%;
+margin: 12px ;
+height: 40px;
+position: absolute;
+top: 0%;
+border-radius: 5px;
+border: none;
+}
+#createButton{
+    display: none;
 }
