@@ -80,7 +80,7 @@ function selectTab(tabId) {
  */
 function toggleEmojis() {
     var emojis = require('emojis-list');
-    console.log(emojis[0]);
+    //console.log(emojis[0]);
     for(i in emojis){
         $('#emojis').append(emojis[i]);
     }
